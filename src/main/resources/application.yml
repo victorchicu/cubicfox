@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: basic
+        readTimeout: 5000
+        connectTimeout: 5000
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL81Dialect
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQL81Dialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cubicfox
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  config:
+    location: application.yml
