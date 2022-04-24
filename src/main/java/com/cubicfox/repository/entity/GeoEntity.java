@@ -1,21 +1,24 @@
 package com.cubicfox.repository.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "geo")
+@Table(name = GeoEntity.COLUMN_NAME, schema = "cubicfox")
 public class GeoEntity {
+    public static final String COLUMN_NAME = "geo";
+
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
     @Column(name = "lat")
     private BigDecimal lat;
     @Column(name = "lng")
     private BigDecimal lng;
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "id")
+    private AddressEntity address;
 
     public void setId(Long id) {
         this.id = id;
@@ -41,5 +44,13 @@ public class GeoEntity {
     public GeoEntity setLng(BigDecimal lng) {
         this.lng = lng;
         return this;
+    }
+
+    public AddressEntity getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 }

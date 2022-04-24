@@ -1,8 +1,12 @@
 package com.cubicfox.dto;
 
+import com.cubicfox.validators.Email;
+
 public class UserDto {
+    private final Long id;
     private final String name;
     private final String username;
+    @Email
     private final String email;
     private final AddressDto address;
     private final String phone;
@@ -10,6 +14,7 @@ public class UserDto {
     private final CompanyDto company;
 
     public UserDto(
+            Long id,
             String name,
             String username,
             String email,
@@ -18,6 +23,7 @@ public class UserDto {
             String website,
             CompanyDto company
     ) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
@@ -25,6 +31,10 @@ public class UserDto {
         this.phone = phone;
         this.website = website;
         this.company = company;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

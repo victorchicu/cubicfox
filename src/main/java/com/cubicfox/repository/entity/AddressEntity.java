@@ -3,10 +3,12 @@ package com.cubicfox.repository.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "address")
+@Table(name = AddressEntity.COLUMN_NAME, schema = "cubicfox")
 public class AddressEntity {
+    public static final String COLUMN_NAME = "address";
+
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
     @Column(name = "street")
     private String street;
@@ -16,9 +18,13 @@ public class AddressEntity {
     private String city;
     @Column(name = "zipcode")
     private String zipcode;
-    @OneToOne
-    @JoinColumn(referencedColumnName = "user_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "address")
+//    @PrimaryKeyJoinColumn
     private GeoEntity geo;
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "id")
+    private UserEntity user;
 
     public void setId(Long id) {
         this.id = id;
@@ -71,5 +77,13 @@ public class AddressEntity {
     public AddressEntity setGeo(GeoEntity geo) {
         this.geo = geo;
         return this;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

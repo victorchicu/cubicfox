@@ -21,14 +21,24 @@ public class UserToEntityConverter implements Converter<User, UserEntity> {
 
     @Override
     public UserEntity convert(User source) {
-        return new UserEntity()
+        AddressEntity addressEntity = toAddressEntity(source.getAddress());
+
+        CompanyEntity companyEntity = toCompanyEntity(source.getCompany());
+
+        UserEntity userEntity = new UserEntity()
+                .setId(source.getId())
                 .setName(source.getName())
                 .setUsername(source.getUsername())
                 .setEmail(source.getEmail())
-                .setAddress(toAddressEntity(source.getAddress()))
+                .setAddress(addressEntity)
                 .setPhone(source.getPhone())
                 .setWebsite(source.getWebsite())
-                .setCompany(toCompanyEntity(source.getCompany()));
+                .setCompany(companyEntity);
+
+        addressEntity.setUser(userEntity);
+        companyEntity.setUser(userEntity);
+
+        return userEntity;
     }
 
     private AddressEntity toAddressEntity(Address address) {

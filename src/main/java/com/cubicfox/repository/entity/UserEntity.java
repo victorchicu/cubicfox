@@ -4,10 +4,12 @@ package com.cubicfox.repository.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = UserEntity.COLUMN_NAME, schema = "cubicfox")
 public class UserEntity {
+    public static final String COLUMN_NAME = "user";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
@@ -16,15 +18,15 @@ public class UserEntity {
     private String username;
     @Column(name = "email")
     private String email;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "user_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @PrimaryKeyJoinColumn
     private AddressEntity address;
     @Column(name = "phone")
     private String phone;
     @Column(name = "website")
     private String website;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "user_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @PrimaryKeyJoinColumn
     private CompanyEntity company;
 
     public Long getId() {

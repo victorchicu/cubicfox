@@ -5,13 +5,16 @@ import com.cubicfox.dto.UserDto;
 import com.cubicfox.feigns.UserClient;
 import com.cubicfox.services.UserService;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Validated
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -26,10 +29,11 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserDto> listUsers() {
+    public List<@Valid UserDto> listUsers() {
         return userClient.listUsers().stream()
                 .map(userDto -> {
-                    return userService.save(toUser(userDto));
+                    User user = toUser(userDto);
+                    return userService.save(user);
                 })
                 .map(this::toUserDto)
                 .collect(Collectors.toList());

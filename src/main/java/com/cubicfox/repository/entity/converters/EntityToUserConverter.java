@@ -22,6 +22,7 @@ public class EntityToUserConverter implements Converter<UserEntity, User> {
     @Override
     public User convert(UserEntity source) {
         return new User()
+                .setId(source.getId())
                 .setName(source.getName())
                 .setUsername(source.getUsername())
                 .setEmail(source.getEmail())

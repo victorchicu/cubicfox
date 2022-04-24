@@ -19,12 +19,10 @@ public class AddressToEntityConverter implements Converter<Address, AddressEntit
 
     @Override
     public AddressEntity convert(Address source) {
-        return new AddressEntity()
-                .setStreet(source.getStreet())
-                .setSuite(source.getSuite())
-                .setCity(source.getCity())
-                .setZipcode(source.getZipcode())
-                .setGeo(toGeoEntity(source.getGeo()));
+        GeoEntity geoEntity = toGeoEntity(source.getGeo());
+        AddressEntity addressEntity = new AddressEntity().setStreet(source.getStreet()).setSuite(source.getSuite()).setCity(source.getCity()).setZipcode(source.getZipcode()).setGeo(geoEntity);
+        geoEntity.setAddress(addressEntity);
+        return addressEntity;
     }
 
     private GeoEntity toGeoEntity(Geo geo) {

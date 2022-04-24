@@ -1,15 +1,12 @@
 package com.cubicfox.repository.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "company")
+@Table(name = "company", schema = "cubicfox")
 public class CompanyEntity {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -17,6 +14,10 @@ public class CompanyEntity {
     private String catchPhrase;
     @Column(name = "bs")
     private String bs;
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "id")
+    private UserEntity user;
 
     public void setId(Long id) {
         this.id = id;
@@ -51,5 +52,13 @@ public class CompanyEntity {
     public CompanyEntity setBs(String bs) {
         this.bs = bs;
         return this;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
