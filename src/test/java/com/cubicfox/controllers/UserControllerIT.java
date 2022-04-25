@@ -15,9 +15,10 @@ public class UserControllerIT extends TestBase {
     public void should_list_users_then_expect_200_http_status_and_same_count_for_each_request() throws Exception {
         for (int i = 0; i < 10; i++) {
             String jsonString = fetchUsers().andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-            List<UserDto> actualUsers = toList(jsonString, new TypeReference<List<UserDto>>() {});
-            Assertions.assertFalse(actualUsers.isEmpty(), "actualUsers should not be empty");
-            Assertions.assertEquals(10, actualUsers.size());
+            List<UserDto> users = toList(jsonString, new TypeReference<List<UserDto>>() {});
+            Assertions.assertFalse(users.isEmpty(), "users must not be empty");
+            Assertions.assertEquals(10, users.size());
+            saveUsers(users);
         }
     }
 }
