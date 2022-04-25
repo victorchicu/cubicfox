@@ -4,18 +4,71 @@
 
 https://docs.datastax.com/en/jdk-install/doc/jdk-install/installOpenJdkDeb.html
 
-## Run JAR
+## To run tests please following steps
 
-1. Navigate to **build/libs** folder
-2. Open command line interface
-3. Run command "**java -jar cubicfox-0.0.1.jar**" to start application
-   
-or simply run a test
+1. Navigate to the root dir and **docker-compose up -d**
+2. Open pg_admin **http://localhost:5050**
+3. Create **cubicfox** database and schema
+4. Create tables according json schema
 
-## Swagger UI with API description
+```
+create table "user"
+(
+    id       integer not null
+        constraint user_pk
+            primary key,
+    name     text,
+    username text,
+    email    text,
+    phone    text,
+    website  text
+);
 
-1. Telnet or wait some time until http port 8080 is opened
-2. Open URL for API description: http://localhost:8080/swagger-ui.html
+alter table "user"
+    owner to postgres;
 
-# To close java process
-### CTRL+C 
+create table address
+(
+    street  text,
+    suite   text,
+    city    text,
+    zipcode text,
+    id      integer
+        constraint address_users_id_fk
+            references "user"
+);
+
+alter table address
+    owner to postgres;
+
+create unique index address_user_id_uindex
+    on address (id);
+
+create unique index user_id_uindex
+    on "user" (id);
+
+create table geo
+(
+    lat numeric,
+    lng numeric,
+    id  integer
+        constraint geo_address_user_id_fk
+            references address (user_id)
+);
+
+alter table geo
+    owner to postgres;
+
+create table company
+(
+    name          text,
+    "catchPhrase" text,
+    bs            text,
+    id            integer
+        constraint company_users_id_fk
+            references "user"
+);
+
+alter table company
+    owner to postgres;
+```
