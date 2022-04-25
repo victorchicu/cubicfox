@@ -27,24 +27,20 @@ public class UserController {
         this.conversionService = conversionService;
     }
 
-    @GetMapping
-    public List<@Valid UserDto> listUsers() {
-        return userClient.listUsers();
-    }
-
     @PostMapping
-    public void saveAll(@Valid @RequestBody @NotEmpty List<UserDto> users) {
+    public void saveUsers(@Valid @RequestBody @NotEmpty List<UserDto> users) {
         userService.saveAll(users.stream()
                 .map(this::toUser)
                 .collect(Collectors.toList())
         );
     }
 
-    private User toUser(UserDto userDto) {
-        return conversionService.convert(userDto, User.class);
+    @GetMapping
+    public List<@Valid UserDto> listUsers() {
+        return userClient.listUsers();
     }
 
-    private UserDto toUserDto(User user) {
-        return conversionService.convert(user, UserDto.class);
+    private User toUser(UserDto userDto) {
+        return conversionService.convert(userDto, User.class);
     }
 }
