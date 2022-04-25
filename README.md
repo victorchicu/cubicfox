@@ -8,8 +8,9 @@ https://docs.datastax.com/en/jdk-install/doc/jdk-install/installOpenJdkDeb.html
 
 1. Navigate to the root dir and **docker-compose up -d**
 2. Open pg_admin **http://localhost:5050**
-3. Create **cubicfox** database and schema
-4. Create tables according json schema
+3. Create database and schema with **cubicfox** name
+4. Create tables according json schema from **https://jsonplaceholder.typicode.com/users**
+5. Run test **should_list_users_then_expect_200_http_status_and_same_count_for_each_request** within UserControllerIT
 
 ```
 create table "user"
