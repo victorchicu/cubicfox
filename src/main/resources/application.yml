@@ -1,6 +1,15 @@
 server:
   port: 8080
 
+logging:
+  level:
+    org:
+      zalando:
+        logbook: TRACE
+
+logbook:
+  format.style: http
+
 spring:
   jpa:
     show-sql: true
